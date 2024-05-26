@@ -5,20 +5,22 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
 
-    public float moveForce = 5f;
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
 
-    public Rigidbody2D rb;
+    public Rigidbody2D rb2D;
 
     Vector2 movement;
 
     // Update is called once per frame
     void Update()
     {
-
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        rb.AddForce(Vector2.right* moveForce);
+        rb2D.MovePosition(rb2D.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }
