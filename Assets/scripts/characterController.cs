@@ -27,12 +27,11 @@ public class characterController : MonoBehaviour
         // Move in X
         rb2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, rb2D.velocity.y);
 
-        // Check is player on the groung
+        // Check if player is on the ground
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, 0.1f, whatIsGround); //|| Physics2D.OverlapCircle(groundCheckPoint2.position, 0.1f, whatIsGround);
-        Debug.Log(isGrounded);
 
         // Manage hangtime
-        if(isGrounded)
+        if (isGrounded)
         {
             hangCounter = hangTime;
         } else
@@ -41,7 +40,7 @@ public class characterController : MonoBehaviour
         }
 
         // Manage jump buffer
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCount = jumpBufferLength;
         } else 
@@ -50,13 +49,13 @@ public class characterController : MonoBehaviour
         }
 
         // Player jump
-        if(jumpBufferCount >= 0 && hangCounter > 0F)
+        if (jumpBufferCount >= 0 && hangCounter > 0F)
         {
             rb2D.velocity =  new Vector2(rb2D.velocity.x, jumpForce);
             jumpBufferCount = 0;
         }
 
-        if(Input.GetButtonUp("Jump") && rb2D.velocity.y > 0)
+        if (Input.GetButtonUp("Jump") && rb2D.velocity.y > 0)
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, rb2D.velocity.y * 0.5f);
         }
