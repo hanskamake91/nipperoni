@@ -10,7 +10,7 @@ public class characterController : MonoBehaviour
 
     public Rigidbody2D rb2D;
 
-    public Transform groundCheckPoint, groundCheckPoint2;
+    public Transform groundCheckPoint; //groundCheckPoint2;
     public LayerMask whatIsGround;
     private bool isGrounded;
 
@@ -27,8 +27,9 @@ public class characterController : MonoBehaviour
         // Move in X
         rb2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, rb2D.velocity.y);
 
-        // Check is player is on the groung
-        isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, 0.1f, whatIsGround) || Physics2D.OverlapCircle(groundCheckPoint2.position, 0.1f, whatIsGround);
+        // Check is player on the groung
+        isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, 0.1f, whatIsGround); //|| Physics2D.OverlapCircle(groundCheckPoint2.position, 0.1f, whatIsGround);
+        Debug.Log(isGrounded);
 
         // Manage hangtime
         if(isGrounded)
