@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerMovement : MonoBehaviour
+public class playerAutoMovement : MonoBehaviour
 {
 
     public float moveForce = 5f;
@@ -19,6 +19,6 @@ public class playerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.AddForce(Vector2.right* moveForce);
+        rb.AddForce(Vector2.right * moveForce);
     }
 }
