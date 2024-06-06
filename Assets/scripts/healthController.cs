@@ -9,6 +9,8 @@ public class healthController : MonoBehaviour
     public LayerMask whatIsEnemy;
     private bool takingDamage;
 
+    public float damageCooldown = 0.8f;
+
 
     // Update is called once per frame
     void Update()
@@ -17,7 +19,7 @@ public class healthController : MonoBehaviour
 
         if (takingDamage)
         {
-            Debug.Log("Taking Damage!");
+            Debug.Log("Taking damage");
         }
     }
 }

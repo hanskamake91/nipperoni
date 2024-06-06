@@ -49,7 +49,7 @@ public class characterController : MonoBehaviour
         }
 
         // Player jump
-        if (jumpBufferCount >= 0 && hangCounter > 0F)
+        if (jumpBufferCount >= 0 && hangCounter > 0f)
         {
             rb2D.velocity =  new Vector2(rb2D.velocity.x, jumpForce);
             jumpBufferCount = 0;
