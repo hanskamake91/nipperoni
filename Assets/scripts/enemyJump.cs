@@ -6,6 +6,7 @@ using UnityEngine;
 public class enemyJump : MonoBehaviour
 {
 
+    // Creating variables for interval of jumps, force of jump and how long that force is applied
     public float jumpTimer = 3f;
     public float jumpForce = 6f;
     public float forceTimer = 0.85f;
@@ -16,6 +17,8 @@ public class enemyJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Timer starts running, when it reaches zero enemy jumps and then timer for how long force is applied to enemy object starts
+        // and when it reaches zero, enemy object will land with force of gravity
         jumpTimer -= Time.deltaTime;
 
         if (jumpTimer <= 0.0f)
