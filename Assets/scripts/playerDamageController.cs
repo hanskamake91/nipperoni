@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class healthController : MonoBehaviour
+public class playerDamageController : MonoBehaviour
 {
 
     // Creating variables for checking what is/are enemies, is player in contact with enemy and cooldown when player can take damage
@@ -19,14 +19,18 @@ public class healthController : MonoBehaviour
 
     public Rigidbody2D rb2D;
     public GameObject enemy;
-    public float vertKnockForce = 1f;
-    public float horizKnockForce = 1f;
+    public float vertKnockForce = 50f;
+    public float horizKnockForce = 50f;
+
+    public characterController charController;
+    public float moveEnableTimer = 0.7f;
 
 
     void Start()
     {
         // Show player HP when the game starts
         hpText.text += maxHP;
+        charController.moveEnabled = true;
     }
 
 
@@ -40,25 +44,40 @@ public class healthController : MonoBehaviour
         {
             // TODO: add force to player when taking damage
             damageCooldown = 0.0f;
+            moveEnableTimer = 0.0f;
             Debug.Log("Taking damage");
             maxHP -= 1;
             hpText.text = "HP: " + maxHP;
-            rb2D.AddForce(Vector2.up * vertKnockForce);
+            rb2D.AddForce(Vector2.up * vertKnockForce, ForceMode2D.Impulse);
 
             if (rb2D.position.x < enemy.transform.position.x)
             {
-                rb2D.AddForce(Vector2.left * horizKnockForce);
-                
+                charController.moveEnabled = false;
+                rb2D.AddForce(horizKnockForce * Vector2.left, ForceMode2D.Impulse);
+                Debug.Log("KNOCKBACK LEFT");
             } else 
             {
-                rb2D.AddForce(Vector2.right * horizKnockForce);
+                charController.moveEnabled = false;
+                rb2D.AddForce(horizKnockForce * Vector2.right, ForceMode2D.Impulse);
+                Debug.Log("KNOCKBACK RIGHT");
             }
         }
 
-        // Managing cooldown time 0-3
+        // Managing cooldown time
         if (damageCooldown <= 0.9f)
         {
             damageCooldown += Time.deltaTime;
+        }
+
+        // Managing move enabler
+        if (moveEnableTimer <= 0.7)
+        {
+            moveEnableTimer += Time.deltaTime;
+        }
+
+        if (moveEnableTimer >= 0.7)
+        {
+            charController.moveEnabled = true;
         }
     }
 }

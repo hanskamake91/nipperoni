@@ -20,12 +20,17 @@ public class characterController : MonoBehaviour
     public float jumpBufferLength = 0.1f;
     private float jumpBufferCount;
 
+    public bool moveEnabled;
+
 
     // Update is called once per frame
     void Update()
     {
-        // Move in X
-        rb2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, rb2D.velocity.y);
+        // Move in X if moveEnabled = true
+        if (moveEnabled)
+        {
+            rb2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, rb2D.velocity.y);
+        }
 
         // Check if player is on the ground
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, 0.1f, whatIsGround); //|| Physics2D.OverlapCircle(groundCheckPoint2.position, 0.1f, whatIsGround);
