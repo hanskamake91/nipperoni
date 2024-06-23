@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class playerDamageController : MonoBehaviour
 {
 
-    // Creating variables for checking what is/are enemies, is player in contact with enemy and cooldown when player can take damage
+    // Creating variables for checking what is/are enemies, is player in contact with enemy, cooldown when player can take damage,
+    // max HP, enemy positions for knockbacks and knockback forces with movement "cooldown" for said knockbacks
     public Transform enemyCheck;
     public LayerMask whatIsEnemy;
     private bool takingDamage;
@@ -21,6 +22,8 @@ public class playerDamageController : MonoBehaviour
     public GameObject enemy;
     public float vertKnockForce = 50f;
     public float horizKnockForce = 50f;
+    private float maxVelocity = 9f;
+    private float maxMagnitude = 10f;
 
     public characterController charController;
     public float moveEnableTimer = 0.7f;
@@ -28,7 +31,7 @@ public class playerDamageController : MonoBehaviour
 
     void Start()
     {
-        // Show player HP when the game starts
+        // Show player HP when the game starts, enable player movement
         hpText.text += maxHP;
         charController.moveEnabled = true;
     }
@@ -42,7 +45,7 @@ public class playerDamageController : MonoBehaviour
 
         if (takingDamage && damageCooldown >= 0.9f)
         {
-            // TODO: add force to player when taking damage
+            // Player takes damage, taking damage and movement is set to cooldown and knockback force is added vert and horiz.
             damageCooldown = 0.0f;
             moveEnableTimer = 0.0f;
             Debug.Log("Taking damage");
@@ -54,12 +57,22 @@ public class playerDamageController : MonoBehaviour
             {
                 charController.moveEnabled = false;
                 rb2D.AddForce(horizKnockForce * Vector2.left, ForceMode2D.Impulse);
-                Debug.Log("KNOCKBACK LEFT");
+
+                // Check if players velocity exceeds maximum, then restrict - used to prevent excess sliding when contacting top of enemy
+                if (rb2D.velocity.magnitude > maxMagnitude)
+                {
+                    rb2D.velocity = rb2D.velocity.normalized * maxVelocity;
+                }
             } else 
             {
                 charController.moveEnabled = false;
                 rb2D.AddForce(horizKnockForce * Vector2.right, ForceMode2D.Impulse);
-                Debug.Log("KNOCKBACK RIGHT");
+
+                // Check if players velocity exceeds maximum, then restrict - used to prevent excess sliding when contacting top of enemy
+                if (rb2D.velocity.magnitude > maxMagnitude)
+                {
+                    rb2D.velocity = rb2D.velocity.normalized * maxVelocity;
+                }
             }
         }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class characterController : MonoBehaviour
 {
-
+    // Creating variables for move speed and jump force, ground checking to enable jumping, hangtime and jumpbuffer to manage jumping,
+    // move enabling to manage movement with taking damage
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
 
