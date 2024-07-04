@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class characterController : MonoBehaviour
 {
-
+    // Creating variables for move speed and jump force, ground checking to enable jumping, hangtime and jumpbuffer to manage jumping,
+    // move enabling to manage movement with taking damage
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
 
@@ -20,12 +21,17 @@ public class characterController : MonoBehaviour
     public float jumpBufferLength = 0.1f;
     private float jumpBufferCount;
 
+    public bool moveEnabled;
+
 
     // Update is called once per frame
     void Update()
     {
-        // Move in X
-        rb2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, rb2D.velocity.y);
+        // Move in X if moveEnabled = true
+        if (moveEnabled)
+        {
+            rb2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, rb2D.velocity.y);
+        }
 
         // Check if player is on the ground
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, 0.1f, whatIsGround); //|| Physics2D.OverlapCircle(groundCheckPoint2.position, 0.1f, whatIsGround);
@@ -49,7 +55,7 @@ public class characterController : MonoBehaviour
         }
 
         // Player jump
-        if (jumpBufferCount >= 0 && hangCounter > 0F)
+        if (jumpBufferCount >= 0 && hangCounter > 0f)
         {
             rb2D.velocity =  new Vector2(rb2D.velocity.x, jumpForce);
             jumpBufferCount = 0;
